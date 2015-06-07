@@ -1,0 +1,16 @@
+{
+  "name": "subtitler-finder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "opensubtitles-client": "^2.2.0",
+    "recursive-readdir": "^1.2.1",
+    "request": "^2.57.0"
+  }
+}
