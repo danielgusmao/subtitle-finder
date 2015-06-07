@@ -33,13 +33,17 @@ var doRoutine = function(){
       , strPath = path.join(folder, baseFilename+'.'+config.lang+'.srt')
 
     if(fs.existsSync(strPath))
-      fs.unlinkSync(strPath);
+      fs.unlinkSync(strPath);    
     
     opensubtitles.api.searchForFile(token, config.lang, filepath)
     .then(function(results){
-      request(results[0].SubDownloadLink)
-        .pipe(zlib.createGunzip())
-        .pipe(fs.createWriteStream(strPath));
+      console.log('Downloading '+filename);
+      var r = request(results[0].SubDownloadLink)
+      .on('response', function(response) {
+          console.log('Done!');
+      })
+      .pipe(zlib.createGunzip())
+      .pipe(fs.createWriteStream(strPath));      
     });
 
   }
