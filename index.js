@@ -7,9 +7,7 @@ var path = require('path')
   , fs = require('fs')
   , token;
 
-var doRoutine = function(){
-
-  console.log('Routine started');
+var doRoutine = function(){  
 
   function isElegible(filename) {
     var elegible = false;
@@ -48,17 +46,18 @@ var doRoutine = function(){
 
   }
 
-  recursive(config.path, function (err, files) {
-    for(var i in files)
-      if(isElegible(files[i])) downloadSubtitle(files[i]);
-  });
+
+  opensubtitles.api.login()
+  .then(function(_token){
+    token = _token;
+    console.log('Routine started');
+    recursive(config.path, function (err, files) {
+      for(var i in files)
+        if(isElegible(files[i])) downloadSubtitle(files[i]);
+    });
+  });  
 
 };
 
-opensubtitles.api.login()
-.then(function(_token){
-  token = _token;
-  console.log('Sucessfull login to Opensubtitles');
-  doRoutine();
-  setInterval(doRoutine, config.interval * 60 * 1000);
-});
+doRoutine();
+setInterval(doRoutine, config.interval * 60 * 1000);
